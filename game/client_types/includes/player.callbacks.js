@@ -52,6 +52,7 @@ function init() {
     node.game.module=0;
     node.game.answersModule4=[];
     node.game.round=0;
+    node.game.dataPlayerValues=[];
 
     // Setup the header (by default on the left side).
     if (!W.getHeader()) {
@@ -759,7 +760,18 @@ function dataPlayer(){
 
             age=value;
             console.log("edad:"+age+ ", genero: "+gender+", politica: "+politics+", respuesta : "+anwser);
-            node.done();
+            var dataResult;
+
+            dataResult={
+                module:"dataResult",
+                age:age,
+                gender:gender,
+                politics:politics,
+                anwser:anwser
+
+            };
+            node.game.dataPlayerValues.push(dataResult);
+            node.done(dataResult);
 
         };
 
@@ -784,9 +796,15 @@ function questionary2(){
                 console.log("validar");
 
                 console.log(arrayAnswers);
-                node.done();
             } else {
-                node.done();
+                var dataResult;
+                dataResult={
+                    module:"questionary2",
+                    arrayAnsers:arrayAnswers
+
+                };
+                node.game.dataPlayerValues.push(dataResult);
+                node.done(dataResult);
                 //node.game.answersModule4 = arrayAnswers;
                 console.log(arrayAnswers);
             }
@@ -809,7 +827,18 @@ function questionary3(){
             if(flag){
                 console.log('validar')
             }else{
-                node.done();
+                var dataResult;
+                dataResult={
+                    module:"questionary3",
+                    arrayAnsers:socio
+
+                };
+                node.game.dataPlayerValues.push(dataResult);
+                node.done(dataResult);
+                node.done({
+                    module:'INFO_USER',
+                    dataPlayerValues:node.game.dataPlayerValues
+                })
             }
         }
 
